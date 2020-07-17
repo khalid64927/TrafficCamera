@@ -10,6 +10,18 @@
 * Android Gradle Plugin 1.3.60-eap-25
 
 
+## Task requirement
+
+Traffic condition map
+
+Requirements
+•	Build an iOS/Android app to show all traffic camera on map as a pin
+•	When the user taps on a pin, the app should show the latest photo capture by that traffic light.
+
+Tips
+•	The data at https://data.gov.sg/dataset/traffic-images should be used.
+
+
 ### Functionality
 
 App shows LTA Camera view over Map as pins
