@@ -1,0 +1,20 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="OutlineStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/colorGreen</item>
+        <item name="android:textColor">@color/colorGreen</item>
+        <!--<item name="font">@font/roboto_medium</item>-->
+        <item name="backgroundTint">@color/colorFill</item>
+        <item name="strokeWidth">2dp</item>
+    </style>
+
+</resources>

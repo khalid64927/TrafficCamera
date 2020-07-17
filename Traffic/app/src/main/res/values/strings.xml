@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Zulkhe</string>
+    <string name="loading_tasks_error">Something went wrong at our end</string>
+</resources>
