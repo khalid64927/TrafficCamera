@@ -42,12 +42,12 @@ class SingleFragmentActivity : AppCompatActivity() {
     fun setFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .add(R.id.container, fragment, "TEST")
-            .commit()
+            .commitAllowingStateLoss()
     }
 
     fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, fragment)
-            .commit()
+            .commitAllowingStateLoss()
     }
 }

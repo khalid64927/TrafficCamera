@@ -19,7 +19,6 @@
 
 package com.khalid.hamid.githubrepos.di
 
-import com.khalid.hamid.githubrepos.db.RepoDao
 import com.khalid.hamid.githubrepos.network.BaseRepository
 import com.khalid.hamid.githubrepos.network.remote.FakeDataSource
 import dagger.Module
@@ -31,7 +30,7 @@ class RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideRepository(repoDao: RepoDao): BaseRepository {
-        return BaseRepository(FakeDataSource(repoDao))
+    fun provideRepository(): BaseRepository {
+        return BaseRepository(FakeDataSource())
     }
 }

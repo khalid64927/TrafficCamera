@@ -17,12 +17,18 @@
 package com.khalid.hamid.githubrepos.network
 
 import com.khalid.hamid.githubrepos.vo.lta.GetTrafficResponse
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.QueryMap
+
 
 interface ZulkheService {
 
 
     @GET("traffic-images")
     suspend fun fetchLTATrafficData(): Response<GetTrafficResponse>
+
+    @GET("traffic-images")
+    suspend fun friends(@QueryMap filters: Map<String, String>): Response<GetTrafficResponse>
 }

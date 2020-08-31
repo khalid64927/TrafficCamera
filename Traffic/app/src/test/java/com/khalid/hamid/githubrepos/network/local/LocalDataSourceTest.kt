@@ -19,7 +19,6 @@
 
 package com.khalid.hamid.githubrepos.network.local
 
-import com.khalid.hamid.githubrepos.db.LtaDao
 import com.khalid.hamid.githubrepos.network.Result
 import com.khalid.hamid.githubrepos.utilities.Prefs
 import com.khalid.hamid.githubrepos.vo.lta.Api_info
@@ -33,14 +32,12 @@ import org.mockito.Mockito
 
 class LocalDataSourceTest {
 
-    lateinit var ltaDao: LtaDao
     lateinit var pref: Prefs
 
     lateinit var localDataSource: LocalDataSource
 
     @Before
     fun setUp() {
-        ltaDao = Mockito.mock(LtaDao::class.java)
         pref = Mockito.mock(Prefs::class.java)
         localDataSource = LocalDataSource(pref)
     }

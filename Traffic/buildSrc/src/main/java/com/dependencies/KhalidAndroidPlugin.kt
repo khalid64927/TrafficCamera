@@ -42,7 +42,6 @@ open class KhalidAndroidPlugin : Plugin<Project>, Utility() {
         ext = target.extensions.create<KPluginExtensions>("KPlugin")
         target.applyPlugins((target.name == "app"))
         System.out.println("name "+ target.name)
-        //TODO: unable to use extension property in apply function
         target.configureAndroid()
         target.configureQuality()
         System.out.println("ext  ..after "+ ext.compileSDK)
@@ -95,7 +94,6 @@ open class KhalidAndroidPlugin : Plugin<Project>, Utility() {
                 targetSdkVersion(ext.targetSDK)
                 versionName = ext.versionName
                 versionCode = ext.versionCode
-                //dataBinding.isEnabledForTests = true
                 vectorDrawables.useSupportLibrary = true
                 testInstrumentationRunner = ext.testRunner
 

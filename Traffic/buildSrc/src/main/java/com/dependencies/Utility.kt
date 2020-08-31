@@ -57,8 +57,6 @@ open class Utility {
             apply(plugin = "com.android.library")
             apply(plugin = "org.gradle.maven-publish")
         }
-       /* apply(plugin = "com.android.application")
-        apply(plugin = "io.fabric")*/
         apply(plugin = "kotlin-android")
         apply(plugin = "kotlin-android-extensions")
         apply(plugin = "kotlin-kapt")
@@ -227,9 +225,12 @@ open class Utility {
         androidTestImplementation(Dependencies.GOOGLE_MATERIAL)
 
         androidTestImplementation(Dependencies.TEST_RULES)
+        androidTestImplementation(Dependencies.ASTL_RUNNER)
         androidTestImplementation(Dependencies.JUNIT_EXT)
         androidTestImplementation(Dependencies.ARCH_CORE_TESTING)
         androidTestImplementation(Dependencies.MOKITO_CORE)
+        androidTestImplementation(Dependencies.MOKITO_ANDROID)
+        androidTestImplementation(Dependencies.ESP_CONTRIBUTE)
         androidTestImplementation(Dependencies.SWIPEX)
         androidTestImplementation(Dependencies.MULTIDEXTEST)
 
@@ -239,15 +240,13 @@ open class Utility {
             exclude(group = "com.android.support", module = "support-annotations")
             exclude(group = "com.google.code.findbugs", module = "jsr305")
         })
-        addConfigurationWithExclusion("androidTestImplementation",Dependencies.MOKITO_CORE,
-            { exclude(group = "net.bytebuddy") })
+        /*addConfigurationWithExclusion("androidTestImplementation",Dependencies.MOKITO_CORE,
+            { exclude(group = "net.bytebuddy") })*/
     }
 
     @Suppress("UNUSED_PARAMETER")
     fun DependencyHandler.dagger(){
-        //implementation(Dependencies.DAGGER_RUNTIME)
         api(Dependencies.DAGGER_ANDROID)
-        //implementation(Dependencies.DAGGER_ANDROID_SUPPORT)
         kapt(Dependencies.DAGGER_ANDROID_PROCESSOR)
     }
 

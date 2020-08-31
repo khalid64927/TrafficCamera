@@ -24,6 +24,7 @@ import com.khalid.hamid.githubrepos.vo.lta.Api_info
 import com.khalid.hamid.githubrepos.vo.lta.GetTrafficResponse
 import javax.inject.Inject
 import timber.log.Timber
+import java.util.*
 
 class RemoteDataSource @Inject constructor(
     private val zulkheService: ZulkheService
@@ -32,7 +33,9 @@ class RemoteDataSource @Inject constructor(
     suspend fun fetchLTAData():Result<GetTrafficResponse> {
         Timber.d("fetchLTAData")
         try{
-            val ltaData = zulkheService.fetchLTATrafficData()
+
+            val any = mapOf("key1" to "x", "key2" to "y", "key3" to "zz")
+            val ltaData = zulkheService.friends(any)
             if(ltaData.isSuccessful){
                 return Success(ltaData?.body() ?: GetTrafficResponse(emptyList(), Api_info("")))
             }

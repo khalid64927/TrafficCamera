@@ -15,7 +15,6 @@ open class KPluginExtensions {
     var versionName = "1.1"
     var testRunner = "com.khalid.hamid.githubrepos.utilities.AppTestRunner"
     var lintBaseLineFilePath = ""
-    //var testRunner = "com.khalid.hamid.githubrepos.utilities.AppTestRunner"
     var lintExclusionRules : List<String> = emptyList()
     var checkstylePath = ""
 

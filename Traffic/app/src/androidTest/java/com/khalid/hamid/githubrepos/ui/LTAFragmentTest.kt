@@ -62,12 +62,7 @@ class LTAFragmentTest {
 
     private lateinit var viewModel: LTAViewModel
     private lateinit var mockBindingAdapter: FragmentBindingAdapters
-    /*private val ltaData = MutableLiveData<Resource<GetTrafficResponse>>().apply { value = Resource(
-        Status.SUCCESS, GetTrafficResponse(emptyList(), Api_info("")), "wait") }*/
-
-    private val testFragment = TestUserFragment().apply {
-        // arguments = LTAFragmentArgs("a", "b").toBundle()
-    }
+    private val testFragment = TestUserFragment()
 
     private val error_item = Resource(Status.ERROR, GetTrafficResponse(emptyList(), Api_info("")), " error happened")
     private val loading_item = Resource(Status.LOADING, GetTrafficResponse(emptyList(), Api_info("")), " error happened")
@@ -101,8 +96,5 @@ class LTAFragmentTest {
         onView(withId(R.id.map)).check(matches(isDisplayed()))
     }
 
-    class TestUserFragment : LTAFragment() {
-        val navController = mock<NavController>()
-        override fun navController() = navController
-    }
+    class TestUserFragment : LTAFragment()
 }

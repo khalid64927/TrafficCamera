@@ -25,6 +25,7 @@ import com.khalid.hamid.githubrepos.network.BaseRepository
 import com.khalid.hamid.githubrepos.network.Resource
 import com.khalid.hamid.githubrepos.network.Result
 import com.khalid.hamid.githubrepos.network.Status
+import com.khalid.hamid.githubrepos.testing.OpenForTesting
 import com.khalid.hamid.githubrepos.utilities.EspressoIdlingResource
 import com.khalid.hamid.githubrepos.vo.lta.Api_info
 import com.khalid.hamid.githubrepos.vo.lta.GetTrafficResponse
@@ -33,6 +34,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
+@OpenForTesting
 class LTAViewModel @Inject constructor(val baseRepository: BaseRepository) : ViewModel() {
 
     val _items = MutableLiveData<Resource<GetTrafficResponse>>().apply { value = Resource(

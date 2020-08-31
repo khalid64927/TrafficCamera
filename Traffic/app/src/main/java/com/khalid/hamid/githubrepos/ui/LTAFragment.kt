@@ -21,6 +21,7 @@ package com.khalid.hamid.githubrepos.ui
 import android.app.Application
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -38,6 +39,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.khalid.hamid.githubrepos.R
 import com.khalid.hamid.githubrepos.databinding.FragmentLtaBinding
 import com.khalid.hamid.githubrepos.di.Injectable
+import com.khalid.hamid.githubrepos.network.Resource
 import com.khalid.hamid.githubrepos.network.Status
 import com.khalid.hamid.githubrepos.utilities.*
 import com.khalid.hamid.githubrepos.vo.lta.Api_info
@@ -47,11 +49,14 @@ import com.khalid.hamid.githubrepos.vo.lta.Location
 import timber.log.Timber
 import javax.inject.Inject
 
-open class LTAFragment : Fragment() ,
+open class LTAFragment:
+    Fragment(),
     Injectable,
     OnMapReadyCallback{
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
     @Inject
     lateinit var app: Application
 
@@ -71,46 +76,50 @@ open class LTAFragment : Fragment() ,
             run {
                 checkReadyThen {
                     when (ltaResponse.status) {
-                        Status.SUCCESS -> {
-                            Timber.d("success %s", ltaResponse.data.toString())
-                            setMarkerMap(ltaResponse.data ?: GetTrafficResponse(emptyList(), Api_info("")))
-                            addMarkers(markerMap)
-                            ltaResponse.data?.let {
-                                // animating on Map only first time on first pin
-                                if(!isZoomedIn){
-                                    zoomToPin(it.items[0].cameras[0].location)
-                                    isZoomedIn = true
-                                }
-                            }
-                            val timestamp = ltaResponse.data?.let { it.items[0].timestamp }
-                            if (binding.timestamp.visibility == View.INVISIBLE) {
-                                binding.timestamp.visibility = View.VISIBLE
-                            }
-                            val prefix = "Last updated : "
-                            if(!binding.timestamp.text.equals(prefix + timestamp)){
-                                binding.timestamp.text = prefix + timestamp
-                            }
-                            Toast.makeText(activity, "refresh of traffic data completed", Toast.LENGTH_SHORT).show()
-                        }
-                        Status.ERROR -> {
-                            Timber.d("error ")
-                            Toast.makeText(activity, "Failed to get latest traffic data", Toast.LENGTH_SHORT).show()
-                            binding.timestamp.visibility = View.INVISIBLE
-
-                        }
-                        Status.LOADING -> {
-                            Timber.d("loading ")
-                            Toast.makeText(activity, "updating traffic data", Toast.LENGTH_SHORT).show()
-                            if (binding.timestamp.visibility == View.INVISIBLE) {
-                                binding.timestamp.visibility = View.VISIBLE
-                            }
-                            binding.timestamp.text = "updating..."
-                        }
-
+                        Status.SUCCESS -> stateSuccess(ltaResponse)
+                        Status.ERROR -> stateError(ltaResponse)
+                        Status.LOADING -> stateLoading(ltaResponse)
                     }
                 }
             }
         })
+    }
+
+    private fun stateSuccess( ltaResponse : Resource<GetTrafficResponse>){
+        Timber.d("success %s", ltaResponse.data.toString())
+        setMarkerMap(ltaResponse.data ?: GetTrafficResponse(emptyList(), Api_info("")))
+        addMarkers(markerMap)
+        ltaResponse.data?.let {
+            // animating on Map only first time on first pin
+            if(!isZoomedIn){
+                zoomToPin(it.items[0].cameras[0].location)
+                isZoomedIn = true
+            }
+        }
+        val timestamp = ltaResponse.data?.let { it.items[0].timestamp }
+        if (binding.timestamp.visibility == View.INVISIBLE) {
+            binding.timestamp.visibility = View.VISIBLE
+        }
+        val prefix = "Last updated : "
+        if(!binding.timestamp.text.equals(prefix + timestamp)){
+            binding.timestamp.text = prefix + timestamp
+        }
+        Toast.makeText(activity, "refresh of traffic data completed", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun stateError( ltaResponse : Resource<GetTrafficResponse>){
+        Timber.d("error ")
+        Toast.makeText(activity, "Failed to get latest traffic data", Toast.LENGTH_SHORT).show()
+        binding.timestamp.visibility = View.INVISIBLE
+    }
+
+    private fun stateLoading( ltaResponse : Resource<GetTrafficResponse>){
+        Timber.d("loading ")
+        Toast.makeText(activity, "updating traffic data", Toast.LENGTH_SHORT).show()
+        if (binding.timestamp.visibility == View.INVISIBLE) {
+            binding.timestamp.visibility = View.VISIBLE
+        }
+        binding.timestamp.text = "updating..."
     }
 
 
@@ -149,7 +158,7 @@ open class LTAFragment : Fragment() ,
         }
     }
 
-    private val handler = Handler()
+    private val handler = Handler(Looper.getMainLooper())
 
     /**
      * LTA data is refreshed on the map every 1 minute
@@ -244,8 +253,4 @@ open class LTAFragment : Fragment() ,
         val latLng = LatLng(location.latitude, location.longitude)
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16f))
     }
-
-
-
-
 }
